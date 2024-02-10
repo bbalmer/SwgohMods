@@ -86,3 +86,24 @@ export type InvoiceForm = {
   amount: number;
   status: 'pending' | 'paid';
 };
+
+export type Mods = {
+          id: string;
+        name: string;
+        class: string;
+        recommended_set: string;
+        recommended_speed: number;
+        receiver_primary: string;
+        	receiver_secondary: string;
+        	holo_primary: string;
+        	holo_secondary: string;
+        	multiplexer_primary: string;
+        	multiplexer_secondary: string;
+        	databus_primary: string;
+        	databus_secondary: string;
+        	transmitter_primary: string;
+        	transmitter_secondary: string;
+        	processor_primary: string;
+        	processor_secondary: string;
+        	notes: string;
+};

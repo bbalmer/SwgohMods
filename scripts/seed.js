@@ -4,6 +4,7 @@ const {
   customers,
   revenue,
   users,
+  mods,
 } = require('../app/lib/placeholder-data.js');
 const bcrypt = require('bcrypt');
 
@@ -160,13 +161,69 @@ async function seedRevenue(client) {
   }
 }
 
+
+
+async function seedMods(client) {
+  try {
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+    // Create the "mods" table if it doesn't exist
+    const createTable = await client.sql`
+      CREATE TABLE IF NOT EXISTS mods (
+        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        class VARCHAR(255) NOT NULL,
+        recommended_set VARCHAR(255) NOT NULL,
+        recommended_speed VARCHAR(255) NOT NULL,
+        receiver_primary VARCHAR(255) ,
+        	receiver_secondary VARCHAR(255) ,
+        	holo_primary VARCHAR(255) ,
+        	holo_secondary VARCHAR(255) ,
+        	multiplexer_primary VARCHAR(255) ,
+        	multiplexer_secondary VARCHAR(255) ,
+        	databus_primary VARCHAR(255) ,
+        	databus_secondary VARCHAR(255) ,
+        	transmitter_primary VARCHAR(255) ,
+        	transmitter_secondary VARCHAR(255) ,
+        	processor_primary VARCHAR(255) ,
+        	processor_secondary VARCHAR(255) ,
+        	notes VARCHAR(255)
+      );
+    `;
+
+    console.log(`Created "mods" table`);
+
+    // Insert data into the "customers" table
+    const insertedMods = await Promise.all(
+      mods.map(
+        (mod) => client.sql`
+        INSERT INTO mods (id, name, class, recommended_set, recommended_speed, receiver_primary, receiver_secondary, holo_primary, holo_secondary, multiplexer_primary, multiplexer_secondary, databus_primary, databus_secondary, transmitter_primary, transmitter_secondary, processor_primary, processor_secondary, notes)
+        VALUES (${mod.id}, ${mod.name}, ${mod.class}, ${mod.recommended_set}, ${mod.recommended_speed}, ${mod.receiver_primary}, ${mod.receiver_secondary}, ${mod.halo_primary}, ${mod.halo_secondary}, ${mod.multiplexer_primary}, ${mod.multiplexer_secondary}, ${mod.databus_primary}, ${mod.databus_secondary}, ${mod.transmitter_primary}, ${mod.transmitter_secondary}, ${mod.processor_primary}, ${mod.processor_secondary}, ${mod.notes})
+        ON CONFLICT (id) DO NOTHING;
+      `,
+      ),
+    );
+
+    console.log(`Seeded ${insertedMods.length} mods`);
+
+    return {
+      createTable,
+      mods: insertedMods,
+    };
+  } catch (error) {
+    console.error('Error seeding mods:', error);
+    throw error;
+  }
+}
+
 async function main() {
   const client = await db.connect();
 
-  await seedUsers(client);
-  await seedCustomers(client);
-  await seedInvoices(client);
-  await seedRevenue(client);
+  // await seedUsers(client);
+  // await seedCustomers(client);
+  // await seedInvoices(client);
+  // await seedRevenue(client);
+  await seedMods(client);
 
   await client.end();
 }
