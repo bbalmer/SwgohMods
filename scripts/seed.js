@@ -4,9 +4,10 @@ const {
   customers,
   revenue,
   users,
-  mods,
+  characters,
 } = require('../app/lib/placeholder-data.js');
 const bcrypt = require('bcrypt');
+const { default: parse } = require("node-html-parser");
 
 async function seedUsers(client) {
   try {
@@ -163,16 +164,17 @@ async function seedRevenue(client) {
 
 
 
-async function seedMods(client) {
+async function seedCharacters(client) {
   try {
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
     // Create the "mods" table if it doesn't exist
     const createTable = await client.sql`
-      CREATE TABLE IF NOT EXISTS mods (
+      CREATE TABLE IF NOT EXISTS characters (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+        swgoh_id VARCHAR(255),
         name VARCHAR(255) NOT NULL,
-        class VARCHAR(255) NOT NULL,
+        type VARCHAR(255) NOT NULL,
         recommended_set VARCHAR(255) NOT NULL,
         recommended_speed VARCHAR(255) NOT NULL,
         receiver_primary VARCHAR(255) ,
@@ -187,21 +189,64 @@ async function seedMods(client) {
         	transmitter_secondary VARCHAR(255) ,
         	processor_primary VARCHAR(255) ,
         	processor_secondary VARCHAR(255) ,
-        	notes VARCHAR(255)
+        	notes VARCHAR(255),
+          image VARCHAR(255)
       );
     `;
 
-    console.log(`Created "mods" table`);
+    console.log(`Created "characters" table`);
 
     // Insert data into the "customers" table
     const insertedMods = await Promise.all(
-      mods.map(
-        (mod) => client.sql`
-        INSERT INTO mods (id, name, class, recommended_set, recommended_speed, receiver_primary, receiver_secondary, holo_primary, holo_secondary, multiplexer_primary, multiplexer_secondary, databus_primary, databus_secondary, transmitter_primary, transmitter_secondary, processor_primary, processor_secondary, notes)
-        VALUES (${mod.id}, ${mod.name}, ${mod.class}, ${mod.recommended_set}, ${mod.recommended_speed}, ${mod.receiver_primary}, ${mod.receiver_secondary}, ${mod.halo_primary}, ${mod.halo_secondary}, ${mod.multiplexer_primary}, ${mod.multiplexer_secondary}, ${mod.databus_primary}, ${mod.databus_secondary}, ${mod.transmitter_primary}, ${mod.transmitter_secondary}, ${mod.processor_primary}, ${mod.processor_secondary}, ${mod.notes})
+      characters.map(async (mod) => {
+
+        let swgohId = mod.name.replace(/\s+/g, '-').toLowerCase();
+        let url = 'https://swgoh.gg/characters/' + swgohId + '/';
+
+        let data = await fetch(url)
+          .then(function (response) {
+            // The API call was successful!
+            return response.text();
+          })
+          .then(function (html) {
+            // Convert the HTML string into a document object
+
+            var doc = parse(html);
+
+            // Get the image file
+            var img = doc.querySelector('.panel-profile-img')?.getAttribute('src');
+            return {
+              imgUrl: img,
+            };
+          })
+          .catch(function (err) {
+            // There was an error
+            console.warn('Something went wrong.', err);
+          });
+
+        let img = data?.imgUrl;
+        if (!img) {
+          swgohId = '';
+          img = '';
+        }
+
+        client.sql`
+        INSERT INTO characters (id, swgoh_id, name, type, recommended_set, recommended_speed, receiver_primary, receiver_secondary, holo_primary, holo_secondary, multiplexer_primary, multiplexer_secondary, databus_primary, databus_secondary, transmitter_primary, transmitter_secondary, processor_primary, processor_secondary, notes, image)
+        VALUES (${mod.id}, ${swgohId}, ${mod.name}, ${mod.type}, ${mod.recommended_set}, ${mod.recommended_speed}, ${mod.receiver_primary}, ${mod.receiver_secondary}, ${mod.halo_primary}, ${mod.halo_secondary}, ${mod.multiplexer_primary}, ${mod.multiplexer_secondary}, ${mod.databus_primary}, ${mod.databus_secondary}, ${mod.transmitter_primary}, ${mod.transmitter_secondary}, ${mod.processor_primary}, ${mod.processor_secondary}, ${mod.notes}, ${img})
         ON CONFLICT (id) DO NOTHING;
-      `,
-      ),
+      `;
+      }),
+    );
+
+    const insertedUsers = await Promise.all(
+      users.map(async (user) => {
+        const hashedPassword = await bcrypt.hash(user.password, 10);
+        return client.sql`
+        INSERT INTO users (id, name, email, password)
+        VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword})
+        ON CONFLICT (id) DO NOTHING;
+      `;
+      }),
     );
 
     console.log(`Seeded ${insertedMods.length} mods`);
@@ -223,7 +268,7 @@ async function main() {
   // await seedCustomers(client);
   // await seedInvoices(client);
   // await seedRevenue(client);
-  await seedMods(client);
+  await seedCharacters(client);
 
   await client.end();
 }

@@ -1,16 +1,15 @@
 import Image from 'next/image';
-import { UpdateInvoice, DeleteInvoice } from '@/app/ui/invoices/buttons';
-import InvoiceStatus from '@/app/ui/invoices/status';
-import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
+import { EditCharacter } from '@/app/ui/characters/buttons';
 import { fetchFilteredCharacters } from '@/app/lib/data';
 
-export default async function InvoicesTable({
+export default async function CharacterListingTable({
   query,
   currentPage,
 }: {
   query: string;
   currentPage: number;
 }) {
+
   const characters = await fetchFilteredCharacters(query, currentPage);
 
   return (
@@ -19,10 +18,6 @@ export default async function InvoicesTable({
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
           <div className="md:hidden">
             {characters?.map((char) => (
-
-
-
-
               <div
                 key={char.id}
                 className="mb-2 w-full rounded-md bg-white p-4"
@@ -48,7 +43,7 @@ export default async function InvoicesTable({
                         />}
                       <p>{char.name}</p>
                     </div>
-                    <p className="text-sm text-gray-500">{char.class}</p>
+                    <p className="text-sm text-gray-500">{char.type}</p>
                   </div>
                   {/* <InvoiceStatus status={char.recommended_set} /> */}
                 </div>
@@ -60,8 +55,8 @@ export default async function InvoicesTable({
                     {/* <p>{formatDateToLocal(invoice.date)}</p> */}
                   </div>
                   <div className="flex justify-end gap-2">
-                    <UpdateInvoice id={char.id} />
-                    <DeleteInvoice id={char.id} />
+                    <EditCharacter id={char.id} />
+                    {/* <DeleteInvoice id={char.id} /> */}
                   </div>
                 </div>
               </div>
@@ -74,7 +69,7 @@ export default async function InvoicesTable({
                   Name
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Class
+                  Type
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Recommended Set
@@ -115,7 +110,7 @@ export default async function InvoicesTable({
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {char.class}
+                    {char.type}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     {char.recommended_set}
@@ -125,9 +120,8 @@ export default async function InvoicesTable({
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      {/* <UpdateInvoice id={char.id} />
-                      <DeleteInvoice id={char.id} /> */}
-                      Last
+                      <EditCharacter id={char.id} />
+                      {/* <DeleteInvoice id={char.id} /> */}
                     </div>
                   </td>
                 </tr>

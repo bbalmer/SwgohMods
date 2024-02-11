@@ -7,9 +7,13 @@ import {
   LatestInvoiceRaw,
   User,
   Revenue,
+  Character,
 } from './definitions';
 import { formatCurrency } from './utils';
 import { unstable_noStore as noStore } from 'next/cache';
+import { parse } from 'node-html-parser';
+
+const ITEMS_PER_PAGE = 10;
 
 export async function fetchRevenue() {
   // Add noStore() here to prevent the response from being cached.
@@ -92,7 +96,6 @@ export async function fetchCardData() {
   }
 }
 
-const ITEMS_PER_PAGE = 6;
 export async function fetchFilteredInvoices(
   query: string,
   currentPage: number,
@@ -126,6 +129,66 @@ export async function fetchFilteredInvoices(
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch invoices.');
+  }
+}
+
+export async function fetchFilteredCharacters(
+  query: string,
+  currentPage: number,
+) {
+  //noStore();
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const characters = await sql<Character>`
+      SELECT
+        id,
+        name,
+        type,
+        recommended_set,
+        recommended_speed,
+        receiver_primary,
+        	receiver_secondary,
+        	holo_primary,
+        	holo_secondary,
+        	multiplexer_primary,
+        	multiplexer_secondary,
+        	databus_primary,
+        	databus_secondary,
+        	transmitter_primary,
+        	transmitter_secondary,
+        	processor_primary,
+        	processor_secondary,
+        	notes,
+          image
+      FROM characters
+      WHERE
+        name ILIKE ${`%${query}%`} OR
+        type ILIKE ${`%${query}%`}
+      ORDER BY name
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return characters.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch characters.');
+  }
+}
+
+export async function fetchCharacterPages(query: string) {
+  try {
+    //noStore();
+    const count = await sql`SELECT COUNT(*)
+    FROM characters
+    WHERE name ILIKE ${`%${query}%`} OR type ILIKE ${`%${query}%`}
+  `;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of characters.');
   }
 }
 
@@ -171,6 +234,46 @@ export async function fetchInvoiceById(id: string) {
     }));
 
     return invoice[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch invoice.');
+  }
+}
+
+export async function fetchCharacterById(id: string) {
+  try {
+    //noStore();
+    const data = await sql<Character>`
+      SELECT
+        id,
+        swgoh_id,
+        name,
+        type,
+        recommended_set,
+        recommended_speed,
+        receiver_primary,
+        	receiver_secondary,
+        	holo_primary,
+        	holo_secondary,
+        	multiplexer_primary,
+        	multiplexer_secondary,
+        	databus_primary,
+        	databus_secondary,
+        	transmitter_primary,
+        	transmitter_secondary,
+        	processor_primary,
+        	processor_secondary,
+        	notes,
+          image
+      FROM characters
+      WHERE id = ${id};
+    `;
+
+    const chars = data.rows.map((chars) => ({
+      ...chars,
+    }));
+
+    return chars[0];
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch invoice.');
@@ -239,4 +342,43 @@ export async function getUser(email: string) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
   }
+}
+
+export async function getSwoghCharacter(name: string) {
+  const cleanName = name.replace(/\s+/g, '-').toLowerCase();
+  let url = 'https://swgoh.gg/characters/' + cleanName + '/';
+  let data = await fetch(url)
+    .then(function (response) {
+      // The API call was successful!
+      return response.text();
+    })
+    .then(function (html) {
+      // Convert the HTML string into a document object
+
+      var doc = parse(html);
+
+      // Get the image file
+      var img = doc.querySelector('.panel-profile-img')?.getAttribute('src');
+
+      // var anchors = doc.querySelectorAll('a');
+      // let affiliations = [];
+      // for (var i = 0; i < anchors.length; i++) {
+      //   const anchor = anchors[i];
+      //   let href = anchor.getAttribute('href');
+      //   if (href?.startsWith('/characters/f/')) {
+      //     affiliations.push(anchor.text);
+      //   }
+      // }
+
+      // console.dir(img);
+      return {
+        imgUrl: img,
+      };
+    })
+    .catch(function (err) {
+      // There was an error
+      console.warn('Something went wrong.', err);
+    });
+
+  return data;
 }
