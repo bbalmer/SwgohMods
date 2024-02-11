@@ -48,7 +48,7 @@ export default async function InvoicesTable({
                         />}
                       <p>{char.name}</p>
                     </div>
-                    <p className="text-sm text-gray-500">{char.class}</p>
+                    <p className="text-sm text-gray-500">sadfsadf</p>
                   </div>
                   {/* <InvoiceStatus status={char.recommended_set} /> */}
                 </div>
@@ -115,7 +115,7 @@ export default async function InvoicesTable({
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {char.class}
+                    asdfsadf
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     {char.recommended_set}
