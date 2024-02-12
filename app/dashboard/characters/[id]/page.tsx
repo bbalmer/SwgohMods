@@ -8,6 +8,15 @@ export default async function Page({ params }: { params: { id: string } }) {
     const id = params.id;
     const character = await fetchCharacterById(id);
 
+    let transmitterSecondary = character.transmitter_secondary?.replace(/(\/)/g, " $1 ");
+    let processorSecondary = character.processor_secondary?.replace(/(\/)/g, " $1 ");
+    let databusSecondary = character.databus_secondary?.replace(/(\/)/g, " $1 ");
+    let holoSecondary = character.holo_secondary?.replace(/(\/)/g, " $1 ");
+    let receiverSecondary = character.receiver_secondary?.replace(/(\/)/g, " $1 ");
+    let multiplexerSecondary = character.multiplexer_secondary?.replace(/(\/)/g, " $1 ");
+
+    console.log("AFTER: " + multiplexerSecondary);
+
     if (!character) {
         notFound();
     }
@@ -35,7 +44,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                     <span className="text-lg text-gray-500 dark:text-gray-800">{character.type}</span>
 
                     <div className="grid md:grid-cols-2 gap-12">
-                        <div className='flex flex-row items-center justify-between py-4'>
+                        <div className='flex flex-row items-center justify-between '>
                             <div className="flex items-center">
                                 <div className="min-w-0">
                                     <p className=" text-sm font-semibold md:text-base">Recommended Set</p>
@@ -44,7 +53,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                             </div>
                         </div>
 
-                        <div className='flex flex-row items-center justify-between py-4'>
+                        <div className='flex flex-row items-center justify-between '>
                             <div className="flex items-center">
                                 <div className="min-w-0">
                                     <p className=" text-sm font-semibold md:text-base">Recommended Speed</p>
@@ -58,26 +67,12 @@ export default async function Page({ params }: { params: { id: string } }) {
                     (character.receiver_primary || character.receiver_secondary) &&
                     <div className='grid grid-cols-2 gap-4 py-4'>
                         <div className='grid grid-cols-subgrid gap-2 col-span-2'>
-                            <div className="flex items-center">
-                                <Image
-                                    src="/mods/receiver.png"
-                                    alt='Multi profile picture'
-                                    className="mr-4 "
-                                    width={25}
-                                    height={25}
-                                />
-                                <div className="min-w-0">
-                                    <p className=" text-sm font-semibold md:text-base">
-                                        Receiver
-                                    </p>
-
-                                </div>
-                            </div>
+                            <span className="text-lg text-gray-800 dark:text-gray-800">Receiver</span>
                         </div>
                         <div className="text-right text-sm font-semibold md:text-base">Primary</div>
                         <div className="text-left text-gray-500">{character.receiver_primary}</div>
                         <div className="text-right text-sm font-semibold md:text-base">Secondary</div>
-                        <div className="text-left text-gray-500">{character.receiver_secondary}</div>
+                        <div className="text-left text-gray-500">{receiverSecondary}</div>
                     </div>
                 }
                 {
@@ -89,7 +84,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                         <div className="text-right text-sm font-semibold md:text-base">Primary</div>
                         <div className="text-left text-gray-500">{character.holo_primary}</div>
                         <div className="text-right text-sm font-semibold md:text-base">Secondary</div>
-                        <div className="text-left text-gray-500">{character.holo_secondary}</div>
+                        <div className="text-left text-gray-500">{holoSecondary}</div>
                     </div>
                 }
                 {
@@ -101,7 +96,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                         <div className="text-right text-sm font-semibold md:text-base">Primary</div>
                         <div className="text-left text-gray-500">{character.multiplexer_primary}</div>
                         <div className="text-right text-sm font-semibold md:text-base">Secondary</div>
-                        <div className="text-left text-gray-500">{character.multiplexer_secondary}</div>
+                        <div className="text-left text-gray-500">{multiplexerSecondary}</div>
                     </div>
                 }
                 {
@@ -113,7 +108,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                         <div className="text-right text-sm font-semibold md:text-base">Primary</div>
                         <div className="text-left text-gray-500">{character.databus_primary}</div>
                         <div className="text-right text-sm font-semibold md:text-base">Secondary</div>
-                        <div className="text-left text-gray-500">{character.databus_secondary}</div>
+                        <div className="text-left text-gray-500">{databusSecondary}</div>
                     </div>
                 }
                 {
@@ -125,7 +120,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                         <div className="text-right text-sm font-semibold md:text-base">Primary</div>
                         <div className="text-left text-gray-500">{character.transmitter_primary}</div>
                         <div className="text-right text-sm font-semibold md:text-base">Secondary</div>
-                        <div className="text-left text-gray-500">{character.transmitter_secondary}</div>
+                        <div className="text-left text-gray-500">{transmitterSecondary}</div>
 
                     </div>
                 }
@@ -138,7 +133,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                         <div className="text-right text-sm font-semibold md:text-base">Primary</div>
                         <div className="text-left text-gray-500">{character.processor_primary}</div>
                         <div className="text-right text-sm font-semibold md:text-base">Secondary</div>
-                        <div className="text-left text-gray-500">{character.processor_secondary}</div>
+                        <div className="text-left text-gray-500">{processorSecondary}</div>
                     </div>
                 }
             </div>
