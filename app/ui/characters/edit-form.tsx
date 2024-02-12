@@ -37,6 +37,22 @@ export default function EditCharacterForm({ character }: {
             <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
           </div>
         </div>
+        {/* Character Nickname */}
+        <div className="mb-4">
+          <label htmlFor="nickname" className="mb-2 block text-sm font-medium">
+            Nickname
+          </label>
+          <div className="relative">
+            <input
+              type='text'
+              id='nickname'
+              name='nickname'
+              required
+              defaultValue={character.nickname}
+              className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+            />
+          </div>
+        </div>
 
         {/* SWGOH ID */}
         <div className="mb-4">

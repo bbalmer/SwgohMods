@@ -91,6 +91,7 @@ export type Character = {
   id: string;
   swgoh_id: string;
   name: string;
+  nickname: string;
   type: string;
   recommended_set: string;
   recommended_speed: number;

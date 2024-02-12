@@ -21,6 +21,7 @@ const FormSchema = z.object({
   // }),
   swgoh_id: z.string(),
   name: z.string(),
+  nickname: z.string(),
   type: z.string(),
   recommended_set: z.string(),
   recommended_speed: z.string(),
@@ -47,6 +48,7 @@ export type State = {
   errors?: {
     id?: string[];
     name?: string[];
+    nickname?: string[];
     type?: string[];
     recommended_set?: string[];
     recommended_speed?: string[];
@@ -176,6 +178,7 @@ export async function updateCharacter(
   const validatedFields = UpdateCharacter.safeParse({
     id: formData.get('id'),
     name: formData.get('name'),
+    nickname: formData.get('nickname'),
     swgoh_id: formData.get('swgoh_id'),
     type: formData.get('type'),
     recommended_set: formData.get('recommended_set'),
@@ -243,6 +246,7 @@ export async function updateCharacter(
 
   const {
     name,
+    nickname,
     swgoh_id,
     type,
     recommended_set,
@@ -267,6 +271,7 @@ export async function updateCharacter(
     await sql`
       UPDATE characters
       SET name = ${name}, 
+      nickname = ${nickname},
       type = ${type},
       swgoh_id = ${swgoh_id}, 
       recommended_set = ${recommended_set}, 

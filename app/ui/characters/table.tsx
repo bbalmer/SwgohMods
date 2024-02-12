@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { EditCharacter } from '@/app/ui/characters/buttons';
 import { fetchFilteredCharacters } from '@/app/lib/data';
+import Link from 'next/link';
 
 export default async function CharacterListingTable({
   query,
@@ -68,6 +69,9 @@ export default async function CharacterListingTable({
                 <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
                   Name
                 </th>
+                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
+                  Nickname
+                </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Type
                 </th>
@@ -106,8 +110,13 @@ export default async function CharacterListingTable({
                           height={28}
                           alt={`Default profile picture`}
                         />}
-                      <p>{char.name}</p>
+                      <p>
+                        <Link href={`/dashboard/characters/${char.id}`} className=" p-2 hover:bg-gray-100 underline">{char.name}</Link>
+                      </p>
                     </div>
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    {char.nickname}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     {char.type}

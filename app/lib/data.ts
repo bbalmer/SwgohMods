@@ -144,6 +144,7 @@ export async function fetchFilteredCharacters(
       SELECT
         id,
         name,
+        nickname,
         type,
         recommended_set,
         recommended_speed,
@@ -164,7 +165,8 @@ export async function fetchFilteredCharacters(
       FROM characters
       WHERE
         name ILIKE ${`%${query}%`} OR
-        type ILIKE ${`%${query}%`}
+        type ILIKE ${`%${query}%`} OR
+        nickname ILIKE ${`%${query}%`}
       ORDER BY name
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
@@ -248,6 +250,7 @@ export async function fetchCharacterById(id: string) {
         id,
         swgoh_id,
         name,
+        nickname,
         type,
         recommended_set,
         recommended_speed,
