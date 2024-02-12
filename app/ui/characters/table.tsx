@@ -42,7 +42,7 @@ export default async function CharacterListingTable({
                           height={28}
                           alt={`Default profile picture`}
                         />}
-                      <p>{char.name}</p>
+                      <p><Link href={`/dashboard/characters/${char.id}`} className=" p-2 hover:bg-gray-100 underline">{char.name}</Link></p>
                     </div>
                     <p className="text-sm text-gray-500">{char.type}</p>
                   </div>
@@ -56,7 +56,7 @@ export default async function CharacterListingTable({
                     {/* <p>{formatDateToLocal(invoice.date)}</p> */}
                   </div>
                   <div className="flex justify-end gap-2">
-                    <EditCharacter id={char.id} />
+                    {/* <EditCharacter id={char.id} /> */}
                     {/* <DeleteInvoice id={char.id} /> */}
                   </div>
                 </div>
@@ -129,7 +129,7 @@ export default async function CharacterListingTable({
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      <EditCharacter id={char.id} />
+                      {/* <EditCharacter id={char.id} /> */}
                       {/* <DeleteInvoice id={char.id} /> */}
                     </div>
                   </td>
