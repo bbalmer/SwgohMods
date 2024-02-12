@@ -29,9 +29,9 @@ export default async function ModChart() {
             className='flex flex-row items-center justify-between py-4'>
             <div className="flex items-center">
               <Image
-                src="https://4zs151.p3cdn1.secureserver.net/wp-content/uploads/2017/11/square.png"
+                src="/mods/transmitter.png"
                 alt='Transmitter profile picture'
-                className="mr-4 rounded-full"
+                className="mr-4 "
                 width={43}
                 height={43}
               />
@@ -52,9 +52,9 @@ export default async function ModChart() {
             className='flex flex-row items-center justify-between py-4 border-t'>
             <div className="flex items-center">
               <Image
-                src="https://4zs151.p3cdn1.secureserver.net/wp-content/uploads/2017/11/diamond.png"
+                src="/mods/processor.png"
                 alt='Processor profile picture'
-                className="mr-4 rounded-full"
+                className="mr-4 "
                 width={43}
                 height={43}
               />
@@ -75,9 +75,9 @@ export default async function ModChart() {
             className='flex flex-row items-center justify-between py-4 border-t'>
             <div className="flex items-center">
               <Image
-                src="https://4zs151.p3cdn1.secureserver.net/wp-content/uploads/2017/11/circle.png"
+                src="/mods/data-bus.png"
                 alt='Databus profile picture'
-                className="mr-4 rounded-full"
+                className="mr-4 "
                 width={43}
                 height={43}
               />
@@ -98,9 +98,9 @@ export default async function ModChart() {
             className='flex flex-row items-center justify-between py-4 border-t'>
             <div className="flex items-center">
               <Image
-                src="https://4zs151.p3cdn1.secureserver.net/wp-content/uploads/2017/11/arrow.png"
+                src="/mods/receiver.png"
                 alt='Receiver profile picture'
-                className="mr-4 rounded-full"
+                className="mr-4 "
                 width={43}
                 height={43}
               />
@@ -130,9 +130,9 @@ export default async function ModChart() {
             className='flex flex-row items-center justify-between py-4 border-t'>
             <div className="flex items-center">
               <Image
-                src="https://4zs151.p3cdn1.secureserver.net/wp-content/uploads/2017/11/triangle.png"
+                src="/mods/halo-array.png"
                 alt='Halo profile picture'
-                className="mr-4 rounded-full"
+                className="mr-4 "
                 width={43}
                 height={43}
               />
@@ -162,9 +162,9 @@ export default async function ModChart() {
             className='flex flex-row items-center justify-between py-4 border-t'>
             <div className="flex items-center">
               <Image
-                src="https://4zs151.p3cdn1.secureserver.net/wp-content/uploads/2017/11/cross.png"
+                src="/mods/multiplexer.png"
                 alt='Multi profile picture'
-                className="mr-4 rounded-full"
+                className="mr-4 "
                 width={43}
                 height={43}
               />
