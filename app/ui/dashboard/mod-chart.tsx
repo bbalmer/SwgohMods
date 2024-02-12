@@ -36,14 +36,14 @@ export default async function ModChart() {
                 height={43}
               />
               <div className="min-w-0">
-                <p className="truncate text-sm font-semibold md:text-base">
+                <p className=" text-sm font-semibold md:text-base">
                   Transmitter
                 </p>
                 <p className="hidden text-sm text-gray-500 sm:block">
                   Square
                 </p>
               </div>
-              <div className={`${lusitana.className} pl-5 truncate text-sm font-medium md:text-base`}>Only have the Offense % primary, maxing at 5.88% Offense</div>
+              <div className={`${lusitana.className} pl-5  text-sm font-medium md:text-base`}>Only have the Offense % primary, maxing at 5.88% Offense</div>
             </div>
           </div>
 
@@ -59,14 +59,14 @@ export default async function ModChart() {
                 height={43}
               />
               <div className="min-w-0">
-                <p className="truncate text-sm font-semibold md:text-base">
+                <p className=" text-sm font-semibold md:text-base">
                   Processor
                 </p>
                 <p className="hidden text-sm text-gray-500 sm:block">
                   Diamond
                 </p>
               </div>
-              <div className={`${lusitana.className} pl-5 truncate text-sm font-medium md:text-base`}>Only have the Defense % primary, maxing at 11.75% Defense</div>
+              <div className={`${lusitana.className} pl-5  text-sm font-medium md:text-base`}>Only have the Defense % primary, maxing at 11.75% Defense</div>
             </div>
           </div>
 
@@ -82,14 +82,14 @@ export default async function ModChart() {
                 height={43}
               />
               <div className="min-w-0">
-                <p className="truncate text-sm font-semibold md:text-base">
+                <p className=" text-sm font-semibold md:text-base">
                   Data-Bus
                 </p>
                 <p className="hidden text-sm text-gray-500 sm:block">
                   Circle
                 </p>
               </div>
-              <div className={`${lusitana.className} pl-5 truncate text-sm font-medium md:text-base`}>Can have either the Protection % (23.5% Protection) or Health % (5.88% Health) primaries</div>
+              <div className={`${lusitana.className} pl-5  text-sm font-medium md:text-base`}>Can have either the Protection % (23.5% Protection) or Health % (5.88% Health) primaries</div>
             </div>
           </div>
 
@@ -105,14 +105,14 @@ export default async function ModChart() {
                 height={43}
               />
               <div className="min-w-0">
-                <p className="truncate text-sm font-semibold md:text-base">
+                <p className=" text-sm font-semibold md:text-base">
                   Receiver
                 </p>
                 <p className="hidden text-sm text-gray-500 sm:block">
                   Arrow
                 </p>
               </div>
-              <div className={`${lusitana.className} pl-5 truncate text-sm font-medium md:text-base`}>Can have any of the following seven primaries:
+              <div className={`${lusitana.className} pl-5  text-sm font-medium md:text-base`}>Can have any of the following seven primaries:
                 <ul>
                   <li>Offense % (5.88% Offense)</li>
                   <li>Defense % (11.75% Defense)</li>
@@ -137,14 +137,14 @@ export default async function ModChart() {
                 height={43}
               />
               <div className="min-w-0">
-                <p className="truncate text-sm font-semibold md:text-base">
+                <p className=" text-sm font-semibold md:text-base">
                   Halo-Array
                 </p>
                 <p className="hidden text-sm text-gray-500 sm:block">
                   Triangle
                 </p>
               </div>
-              <div className={`${lusitana.className} pl-5 truncate text-sm font-medium md:text-base`}>Can have any of the following six primaries:
+              <div className={`${lusitana.className} pl-5  text-sm font-medium md:text-base`}>Can have any of the following six primaries:
                 <ul>
                   <li>Offense % (5.88% Offense)</li>
                   <li>Defense % (11.75% Defense)</li>
@@ -169,14 +169,14 @@ export default async function ModChart() {
                 height={43}
               />
               <div className="min-w-0">
-                <p className="truncate text-sm font-semibold md:text-base">
+                <p className=" text-sm font-semibold md:text-base">
                   Multiplexer
                 </p>
                 <p className="hidden text-sm text-gray-500 sm:block">
                   Cross/Plus
                 </p>
               </div>
-              <div className={`${lusitana.className} pl-5 truncate text-sm font-medium md:text-base`}>Can have any of the following six primaries:
+              <div className={`${lusitana.className} pl-5  text-sm font-medium md:text-base`}>Can have any of the following six primaries:
                 <ul>
                   <li>Offense % (5.88% Offense)</li>
                   <li>Defense % (11.75% Defense)</li>

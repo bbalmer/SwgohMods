@@ -38,18 +38,18 @@ export default async function Page({ params }: { params: { id: string } }) {
                         <div className='flex flex-row items-center justify-between py-4'>
                             <div className="flex items-center">
                                 <div className="min-w-0">
-                                    <p className="truncate text-sm font-semibold md:text-base">Recommended Set</p>
+                                    <p className=" text-sm font-semibold md:text-base">Recommended Set</p>
                                 </div>
-                                <div className={` pl-5 truncate  text-gray-500`}>{character.recommended_set}</div>
+                                <div className={` pl-5   text-gray-500`}>{character.recommended_set}</div>
                             </div>
                         </div>
 
                         <div className='flex flex-row items-center justify-between py-4'>
                             <div className="flex items-center">
                                 <div className="min-w-0">
-                                    <p className="truncate text-sm font-semibold md:text-base">Recommended Speed</p>
+                                    <p className=" text-sm font-semibold md:text-base">Recommended Speed</p>
                                 </div>
-                                <div className={` pl-5 truncate  text-gray-500`}>{character.recommended_speed}</div>
+                                <div className={` pl-5   text-gray-500`}>{character.recommended_speed}</div>
                             </div>
                         </div>
                     </div>
@@ -58,7 +58,21 @@ export default async function Page({ params }: { params: { id: string } }) {
                     (character.receiver_primary || character.receiver_secondary) &&
                     <div className='grid grid-cols-2 gap-4 py-4'>
                         <div className='grid grid-cols-subgrid gap-2 col-span-2'>
-                            <span className="text-lg text-gray-800 dark:text-gray-800">Receiver</span>
+                            <div className="flex items-center">
+                                <Image
+                                    src="/mods/receiver.png"
+                                    alt='Multi profile picture'
+                                    className="mr-4 "
+                                    width={25}
+                                    height={25}
+                                />
+                                <div className="min-w-0">
+                                    <p className=" text-sm font-semibold md:text-base">
+                                        Receiver
+                                    </p>
+
+                                </div>
+                            </div>
                         </div>
                         <div className="text-right text-sm font-semibold md:text-base">Primary</div>
                         <div className="text-left text-gray-500">{character.receiver_primary}</div>
