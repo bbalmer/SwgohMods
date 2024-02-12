@@ -30,7 +30,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 {character.nickname &&
                     <h3 >({character.nickname})</h3>
                 }
-                <div className="flex flex-col items-center pb-10">
+                <div className="flex flex-col items-center ">
                     <Image className="w-24 h-24 mb-3 rounded-full shadow-lg" height={100} width={100} src={character.image} alt={character.name} />
                     <span className="text-lg text-gray-500 dark:text-gray-800">{character.type}</span>
 
