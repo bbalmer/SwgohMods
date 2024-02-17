@@ -8,8 +8,8 @@ export const authConfig = {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const shouldBeSecure =
-        nextUrl.pathname.includes('/edit') ||
-        nextUrl.pathname.includes('/create');
+        nextUrl.pathname.includes('/edit-zz') ||
+        nextUrl.pathname.includes('/create-zz');
       if (shouldBeSecure) {
         if (isLoggedIn) return true;
         return false; // Redirect unauthenticated users to login page

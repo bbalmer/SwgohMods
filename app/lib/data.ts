@@ -385,3 +385,43 @@ export async function getSwoghCharacter(name: string) {
 
   return data;
 }
+
+export async function refreshSwgohCharacters() {
+  console.log('calling: ' + refreshSwgohCharacters);
+  let cleanName = '';
+  let url = 'https://swgoh.gg/characters/' + cleanName + '/';
+  let data = await fetch(url)
+    .then(function (response) {
+      // The API call was successful!
+      return response.text();
+    })
+    .then(function (html) {
+      // Convert the HTML string into a document object
+
+      var doc = parse(html);
+
+      // Get the image file
+      var img = doc.querySelector('.panel-profile-img')?.getAttribute('src');
+
+      // var anchors = doc.querySelectorAll('a');
+      // let affiliations = [];
+      // for (var i = 0; i < anchors.length; i++) {
+      //   const anchor = anchors[i];
+      //   let href = anchor.getAttribute('href');
+      //   if (href?.startsWith('/characters/f/')) {
+      //     affiliations.push(anchor.text);
+      //   }
+      // }
+
+      // console.dir(img);
+      return {
+        imgUrl: img,
+      };
+    })
+    .catch(function (err) {
+      // There was an error
+      console.warn('Something went wrong.', err);
+    });
+
+  return data;
+}
