@@ -573,6 +573,24 @@ export async function fetchCharactersByAbility(ability: string) {
   }
 }
 
+export async function fetchCharactersByRole(role: string) {
+  try {
+    const data = await sql<CharacterWithAbility>`
+      SELECT characters.id, characters.swgoh_id, characters.name, characters.image, characters.type, swgoh.roles
+      FROM characters
+      JOIN swgoh ON characters.swgoh_id = swgoh.swgoh_id
+      WHERE ${role} = ANY(swgoh.roles)
+      ORDER BY characters.name
+    `;
+
+    const characters = data.rows;
+    return characters;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch all characters.');
+  }
+}
+
 export async function fetchAbilities() {
   try {
     const data = await sql<StringType>`
@@ -582,5 +600,17 @@ export async function fetchAbilities() {
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch all abilities.');
+  }
+}
+
+export async function fetchRoles() {
+  try {
+    const data = await sql<StringType>`
+    SELECT distinct unnest(roles) as type from swgoh ORDER BY type`;
+    const roles = data.rows;
+    return roles;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch all roles.');
   }
 }

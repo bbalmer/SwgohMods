@@ -4,7 +4,7 @@ import {
   UserGroupIcon,
   HomeIcon,
   DocumentDuplicateIcon,
-  EllipsisHorizontalCircleIcon,
+  FingerPrintIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -23,6 +23,11 @@ const links = [
     name: 'Abilities',
     href: '/dashboard/abilities',
     icon: UserGroupIcon,
+  },
+  {
+    name: 'Roles',
+    href: '/dashboard/roles',
+    icon: FingerPrintIcon,
   },
 
   // { name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon },

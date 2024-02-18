@@ -1,13 +1,13 @@
 import Form from '@/app/ui/characters/edit-form';
 import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
-import { fetchCharacterById, fetchCharactersByAbility } from '@/app/lib/data';
+import { fetchCharactersByRole } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default async function Page({ params }: { params: { id: string } }) {
     const id = decodeURI(params.id);
-    const characters = await fetchCharactersByAbility(id);
+    const characters = await fetchCharactersByRole(id);
 
     if (!characters) {
         notFound();
@@ -16,10 +16,10 @@ export default async function Page({ params }: { params: { id: string } }) {
         <main>
             <Breadcrumbs
                 breadcrumbs={[
-                    { label: 'Abilities', href: '/dashboard/abilities' },
+                    { label: 'Roles', href: '/dashboard/roles' },
                     {
                         label: `${id}`,
-                        href: `/dashboard/abilities/${id}`,
+                        href: `/dashboard/roles/${id}`,
                         active: true,
                     },
                 ]}
