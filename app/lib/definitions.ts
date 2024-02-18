@@ -110,3 +110,21 @@ export type Character = {
   notes: string;
   image: string;
 };
+
+export type Swgoh = {
+  id: string;
+  abilities: string[];
+};
+
+export type StringType = {
+  type: string;
+};
+
+export type CharacterWithAbility = {
+  id: string;
+  swgoh_id: string;
+  name: string;
+  image: string;
+  type: string;
+  abilities: string[];
+};

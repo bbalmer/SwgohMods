@@ -261,6 +261,8 @@ async function seedCharacters(client) {
   }
 }
 
+
+
 async function main() {
   const client = await db.connect();
 

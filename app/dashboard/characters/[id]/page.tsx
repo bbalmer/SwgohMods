@@ -15,8 +15,6 @@ export default async function Page({ params }: { params: { id: string } }) {
     let receiverSecondary = character.receiver_secondary?.replace(/(\/)/g, " $1 ");
     let multiplexerSecondary = character.multiplexer_secondary?.replace(/(\/)/g, " $1 ");
 
-    console.log("AFTER: " + multiplexerSecondary);
-
     if (!character) {
         notFound();
     }
