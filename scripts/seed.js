@@ -368,7 +368,7 @@ async function refreshSwgohCharacters() {
 
 
 async function main() {
-  // const client = await db.connect();
+  const client = await db.connect();
 
   // await seedUsers(client);
   // await seedCustomers(client);
@@ -377,7 +377,7 @@ async function main() {
   // await seedCharacters(client);
   await refreshSwgohCharacters();
 
-  // await client.end();
+  await client.end();
 }
 
 main().catch((err) => {

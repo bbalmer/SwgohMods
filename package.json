@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "next build && prisma generate",
+    "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
     "prettier": "prettier --write --ignore-unknown .",
