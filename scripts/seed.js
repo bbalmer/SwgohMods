@@ -6,8 +6,15 @@ const {
   users,
   characters,
 } = require('../app/lib/placeholder-data.js');
+
+
 const bcrypt = require('bcrypt');
 const { default: parse } = require("node-html-parser");
+
+const {
+  PrismaClient
+} = require('@prisma/client');
+const prisma = new PrismaClient();
 
 async function seedUsers(client) {
   try {
@@ -263,16 +270,114 @@ async function seedCharacters(client) {
 
 
 
+async function refreshSwgohCharacters() {
+
+  const characters = await fetchCharacters();
+
+  for (var i = 0; i < characters.length; i++) {
+    const character = characters[i];
+
+    let url = 'https://swgoh.gg/characters/' + character.swgoh_id + '/';
+
+    console.log(
+      'Checking ' +
+      (i + 1) +
+      ' ' +
+      character.name +
+      ' (' +
+      character.swgoh_id +
+      ')',
+    );
+    let response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error('Bad requet');
+    }
+
+    const html = await response.text();
+
+    // Convert the HTML string into a document object
+    var doc = parse(html);
+
+    // Get the image file
+    var nodes = doc.querySelectorAll('.panel-body');
+
+    for (let idx = 0; idx < nodes.length; idx++) {
+      const panelBody = nodes[idx];
+
+      let roles = [];
+      let abilities = [];
+      if (getPanelBodyType(panelBody, 'Role')) {
+        var anchors = panelBody?.getElementsByTagName('a');
+
+        for (var i = 0; i < anchors?.length; i++) {
+          let anchor = anchors[i];
+          let href = anchor.getAttribute('href');
+          let text = anchor.text;
+          if (href?.includes('/characters/f/')) {
+            console.log('   --> Adding role of ' + text);
+            roles.push(text);
+          }
+        }
+        console.log('Adding ' + roles.length + ' roles');
+      }
+
+      if (getPanelBodyType(panelBody, 'Ability')) {
+        var anchors = panelBody?.getElementsByTagName('a');
+
+        for (var i = 0; i < anchors?.length; i++) {
+          let anchor = anchors[i];
+          let href = anchor.getAttribute('href');
+          let text = anchor.text;
+          if (href?.includes('/characters/f/')) {
+            console.log('   --> Adding ability of ' + text);
+            abilities.push(text);
+          }
+        }
+
+        console.log('Adding ' + abilities.length + ' abilities');
+      }
+
+      // sql`
+      //     INSERT INTO swgoh (swgoh_id, roles, abilities)
+      //     VALUES (${character.swgoh_id}, ${roles}, ${abilities})
+      //     ON CONFLICT (id) DO NOTHING;
+      //   `;
+
+      if (character.swgoh_id) {
+        console.log(
+          'Looking to create new swgoh record for ' + character.swgoh_id,
+        );
+        console.log(roles);
+        console.log(abilities);
+        // const newSwgoh = await prisma.swgoh.create({
+        //   data: {
+        //     swgoh_id: character.swgoh_id,
+        //     roles: roles,
+        //     abilities: abilities,
+        //   },
+        // });
+        // console.log('Adding swgoh data for ' + character.name);
+        // console.dir(newSwgoh);
+      }
+    }
+  }
+
+  return null;
+}
+
+
 async function main() {
-  const client = await db.connect();
+  // const client = await db.connect();
 
   // await seedUsers(client);
   // await seedCustomers(client);
   // await seedInvoices(client);
   // await seedRevenue(client);
-  await seedCharacters(client);
+  // await seedCharacters(client);
+  await refreshSwgohCharacters();
 
-  await client.end();
+  // await client.end();
 }
 
 main().catch((err) => {

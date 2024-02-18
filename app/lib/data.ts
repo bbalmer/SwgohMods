@@ -1,5 +1,9 @@
 import { sql } from '@vercel/postgres';
 
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
 import {
   CustomerField,
   CustomersTableType,
@@ -435,69 +439,108 @@ export async function refreshSwgohCharacters() {
   //truncate the table
   // sql`TRUNCATE swgoh;`;
 
+  var count = 0;
   for (var i = 0; i < characters.length; i++) {
     const character = characters[i] as Character;
 
+    let roles: any = [];
+    let abilities: any = [];
+
+    if (!character.swgoh_id) {
+      continue;
+    }
+
+    count++;
     let url = 'https://swgoh.gg/characters/' + character.swgoh_id + '/';
 
-    console.log('Checking ' + character.name + ' (' + character.swgoh_id + ')');
-    let data = await fetch(url)
-      .then(function (response) {
-        // The API call was successful!
-        return response.text();
-      })
-      .then(function (html) {
-        // Convert the HTML string into a document object
-        var doc = parse(html);
+    console.log(
+      'Checking ' +
+        count +
+        ' ' +
+        character.name +
+        ' (' +
+        character.swgoh_id +
+        ')',
+    );
 
-        // Get the image file
-        var nodes = doc.querySelectorAll('.panel-body');
+    let response = await fetch(url);
 
-        for (let idx = 0; idx < nodes.length; idx++) {
-          const panelBody = nodes[idx];
+    // if (!response.ok) {
+    //   throw new Error('Bad requet');
+    // }
 
-          let roles: any = [];
-          let abilities: any = [];
-          if (getPanelBodyType(panelBody, 'Role')) {
-            var anchors = panelBody?.getElementsByTagName('a');
+    const html = await response.text();
+    // console.log('DONE with ' + count);
 
-            for (var i = 0; i < anchors?.length; i++) {
-              let anchor = anchors[i];
-              let href = anchor.getAttribute('href');
-              let text = anchor.text;
-              if (href?.includes('/characters/f/')) {
-                roles.push(text);
-              }
-            }
-            console.log('Adding ' + roles.length + ' roles');
+    // // Convert the HTML string into a document object
+    var doc = parse(html);
+
+    // // Get the image file
+    var nodes = doc.querySelectorAll('.panel-body');
+
+    for (let idx = 0; idx < nodes.length; idx++) {
+      const panelBody = nodes[idx];
+
+      if (getPanelBodyType(panelBody, 'Role')) {
+        // console.log('Found Role');
+        var anchors = panelBody?.getElementsByTagName('a');
+        // console.log('Found ' + anchors.length + ' anchors in panel-body');
+
+        for (var r = 0; r < anchors?.length; r++) {
+          let anchor = anchors[r];
+          let href = anchor.getAttribute('href');
+          let text = anchor.text;
+          if (href?.includes('/characters/f/')) {
+            // console.log('   --> Adding role of ' + text);
+            roles.push(text);
           }
-
-          if (getPanelBodyType(panelBody, 'Ability')) {
-            var anchors = panelBody?.getElementsByTagName('a');
-
-            for (var i = 0; i < anchors?.length; i++) {
-              let anchor = anchors[i];
-              let href = anchor.getAttribute('href');
-              let text = anchor.text;
-              if (href?.includes('/characters/f/')) {
-                abilities.push(text);
-              }
-            }
-
-            console.log('Adding ' + abilities.length + ' abilities');
-          }
-
-          sql`
-              INSERT INTO swgoh (swgoh_id, roles, abilities)
-              VALUES (${character.swgoh_id}, ${roles}, ${abilities})
-              ON CONFLICT (id) DO NOTHING;
-            `;
         }
-      })
-      .catch(function (err) {
-        // There was an error
-        console.warn('Something went wrong.', err);
-      });
+        console.log('Adding ' + roles.length + ' roles');
+      }
+
+      if (getPanelBodyType(panelBody, 'Ability')) {
+        // console.log('Found Ability');
+        var anchors = panelBody?.getElementsByTagName('a');
+
+        for (var a = 0; a < anchors?.length; a++) {
+          let anchor = anchors[a];
+          let href = anchor.getAttribute('href');
+          let text = anchor.text;
+          if (href?.includes('/characters/f/')) {
+            // console.log('   --> Adding ability of ' + text);
+            abilities.push(text);
+          }
+        }
+
+        console.log('Adding ' + abilities.length + ' abilities');
+      }
+
+      // sql`
+      //     INSERT INTO swgoh (swgoh_id, roles, abilities)
+      //     VALUES (${character.swgoh_id}, ${roles}, ${abilities})
+      //     ON CONFLICT (id) DO NOTHING;
+      //   `;
+    }
+    if (character.swgoh_id) {
+      console.log(
+        'Looking to create new swgoh record for ' + character.swgoh_id,
+      );
+      console.log(roles);
+      console.log(abilities);
+      try {
+        const newSwgoh = await prisma.swgoh.create({
+          data: {
+            swgoh_id: character.swgoh_id,
+            roles: roles,
+            abilities: abilities,
+          },
+        });
+      } catch (err) {
+        console.error('Failed to insert');
+      }
+      // console.log('Adding swgoh data for ' + character.name);
+      // console.dir(newSwgoh);
+    }
   }
 
   return null;

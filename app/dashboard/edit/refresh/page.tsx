@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 
 export default async function Page() {
 
-    const character = await refreshSwgohCharacters();
+    const character = [];//await refreshSwgohCharacters();
 
 
     return (
