@@ -1,6 +1,6 @@
 import { sql } from '@vercel/postgres';
 
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, characters } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -118,47 +118,6 @@ export async function fetchCharacterPages(query: string) {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch total number of characters.');
-  }
-}
-
-export async function fetchCharacterById(id: string) {
-  try {
-    //noStore();
-    const data = await sql<Character>`
-      SELECT
-        id,
-        swgoh_id,
-        name,
-        nickname,
-        type,
-        recommended_set,
-        recommended_speed,
-        receiver_primary,
-        	receiver_secondary,
-        	holo_primary,
-        	holo_secondary,
-        	multiplexer_primary,
-        	multiplexer_secondary,
-        	databus_primary,
-        	databus_secondary,
-        	transmitter_primary,
-        	transmitter_secondary,
-        	processor_primary,
-        	processor_secondary,
-        	notes,
-          image
-      FROM characters
-      WHERE id = ${id};
-    `;
-
-    const chars = data.rows.map((chars) => ({
-      ...chars,
-    }));
-
-    return chars[0];
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch character.');
   }
 }
 
@@ -390,6 +349,29 @@ function getPanelBodyType(node: any, name: string) {
   } else {
     return false;
   }
+}
+
+export async function fetchCharacterById(id: string) {
+  const data = await prisma.characters.findUnique({
+    where: {
+      id: id,
+    },
+  });
+
+  return data;
+}
+
+export async function upgradeCharacterArrayData(data: characters) {
+  if (data.recommended_set && data.recommended_set_arr?.length == 0) {
+    data.recommended_set_arr = data.recommended_set.split('/');
+  }
+
+  const result = await prisma.characters.update({
+    where: {
+      id: data.id,
+    },
+    data: data,
+  });
 }
 
 export async function fetchSwgohById(id: string) {

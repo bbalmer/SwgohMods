@@ -1,6 +1,5 @@
 'use client';
 
-import { Character } from '@/app/lib/definitions';
 import {
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
@@ -8,13 +7,21 @@ import Link from 'next/link';
 import { Button } from '@/app/ui/button';
 import { updateCharacter } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
+import { characters } from '@prisma/client';
+// import { TagsInput } from "react-tag-input-component";
+// import { useEffect, useState } from 'react';
 
 export default function EditCharacterForm({ character }: {
-  character: Character;
+  character: characters;
 }) {
   const initialState = { message: null, errors: {} };
   const updateCharacterWithId = updateCharacter.bind(null, character.id);
   const [state, dispatch] = useFormState(updateCharacterWithId, initialState);
+  // const [selected, setSelected] = useState(["gfg"]);
+
+  // useEffect(() => {
+  //   console.log(selected);
+  // }, [selected])
   return (
     <form action={dispatch}>
       <input type='hidden' id='id' name='id' defaultValue={character.id} />
@@ -47,7 +54,6 @@ export default function EditCharacterForm({ character }: {
               type='text'
               id='nickname'
               name='nickname'
-              required
               defaultValue={character.nickname}
               className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
             />

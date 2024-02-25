@@ -195,8 +195,8 @@ export async function updateCharacter(
     transmitter_secondary: formData.get('transmitter_secondary'),
     processor_primary: formData.get('processor_primary'),
     processor_secondary: formData.get('processor_secondary'),
-    notes: formData.get('notes'),
     image: formData.get('image'),
+    notes: formData.get('notes'),
   });
 
   if (!validatedFields.success) {
@@ -288,7 +288,8 @@ export async function updateCharacter(
       transmitter_secondary = ${transmitter_secondary}, 
       processor_primary = ${processor_primary}, 
       processor_secondary = ${processor_secondary},
-      notes = ${notes}, image = ${image}
+      notes = ${notes}, 
+      image = ${image}
       WHERE id = ${id}
     `;
   } catch (error) {
