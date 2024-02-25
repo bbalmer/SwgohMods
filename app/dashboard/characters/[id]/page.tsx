@@ -7,14 +7,14 @@ import Image from 'next/image';
 export default async function Page({ params }: { params: { id: string } }) {
     const id = params.id;
     const character = await fetchCharacterById(id);
-    const swgoh = await fetchSwgohById(character.swgoh_id);
+    const swgoh = await fetchSwgohById(character?.swgoh_id as string);
 
-    let transmitterSecondary = character.transmitter_secondary?.replace(/(\/)/g, " $1 ");
-    let processorSecondary = character.processor_secondary?.replace(/(\/)/g, " $1 ");
-    let databusSecondary = character.databus_secondary?.replace(/(\/)/g, " $1 ");
-    let holoSecondary = character.holo_secondary?.replace(/(\/)/g, " $1 ");
-    let receiverSecondary = character.receiver_secondary?.replace(/(\/)/g, " $1 ");
-    let multiplexerSecondary = character.multiplexer_secondary?.replace(/(\/)/g, " $1 ");
+    let transmitterSecondary = character?.transmitter_secondary?.replace(/(\/)/g, " $1 ");
+    let processorSecondary = character?.processor_secondary?.replace(/(\/)/g, " $1 ");
+    let databusSecondary = character?.databus_secondary?.replace(/(\/)/g, " $1 ");
+    let holoSecondary = character?.holo_secondary?.replace(/(\/)/g, " $1 ");
+    let receiverSecondary = character?.receiver_secondary?.replace(/(\/)/g, " $1 ");
+    let multiplexerSecondary = character?.multiplexer_secondary?.replace(/(\/)/g, " $1 ");
 
     if (!character) {
         notFound();
@@ -39,7 +39,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                     <h3 >({character.nickname})</h3>
                 }
                 <div className="flex flex-col items-center ">
-                    <Image className="w-24 h-24 mb-3 rounded-full shadow-lg" height={100} width={100} src={character.image} alt={character.name} />
+                    <Image className="w-24 h-24 mb-3 rounded-full shadow-lg" height={100} width={100} src={character?.image as string} alt={character?.name} />
                     <span className="text-xl font-semibold">{character.type}</span>
 
                     <div className="grid md:grid-cols-2 gap-12 mt-4">

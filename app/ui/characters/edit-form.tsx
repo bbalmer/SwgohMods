@@ -25,7 +25,7 @@ export default function EditCharacterForm({ character }: {
   return (
     <form action={dispatch}>
       <input type='hidden' id='id' name='id' defaultValue={character.id} />
-      <input type='hidden' id='image' name='image' defaultValue={character.image} />
+      <input type='hidden' id='image' name='image' defaultValue={character.image as string} />
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Character Name */}
         <div className="mb-4">
@@ -54,7 +54,7 @@ export default function EditCharacterForm({ character }: {
               type='text'
               id='nickname'
               name='nickname'
-              defaultValue={character.nickname}
+              defaultValue={character.nickname as string}
               className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
             />
           </div>
@@ -71,7 +71,7 @@ export default function EditCharacterForm({ character }: {
                 id="swgoh_id"
                 name="swgoh_id"
                 type="text"
-                defaultValue={character.swgoh_id}
+                defaultValue={character.swgoh_id as string}
                 placeholder="SWGOH Character ID"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               />
@@ -151,7 +151,7 @@ export default function EditCharacterForm({ character }: {
                   id="receiver_primary"
                   name="receiver_primary"
                   type="text"
-                  defaultValue={character.receiver_primary}
+                  defaultValue={character.receiver_primary as string}
                   placeholder="Receiver Primary"
                   className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 />
@@ -170,7 +170,7 @@ export default function EditCharacterForm({ character }: {
                   id="receiver_secondary"
                   name="receiver_secondary"
                   type="text"
-                  defaultValue={character.receiver_secondary}
+                  defaultValue={character.receiver_secondary as string}
                   placeholder="Receiver Secondary"
                   className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 />
@@ -193,7 +193,7 @@ export default function EditCharacterForm({ character }: {
                   id="holo_primary"
                   name="holo_primary"
                   type="text"
-                  defaultValue={character.holo_primary}
+                  defaultValue={character.holo_primary as string}
                   placeholder="Holo-Array Primary"
                   className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 />
@@ -212,7 +212,7 @@ export default function EditCharacterForm({ character }: {
                   id="holo_secondary"
                   name="holo_secondary"
                   type="text"
-                  defaultValue={character.holo_secondary}
+                  defaultValue={character.holo_secondary as string}
                   placeholder="Holo-Array Secondary"
                   className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 />
@@ -235,7 +235,7 @@ export default function EditCharacterForm({ character }: {
                   id="multiplexer_primary"
                   name="multiplexer_primary"
                   type="text"
-                  defaultValue={character.multiplexer_primary}
+                  defaultValue={character.multiplexer_primary as string}
                   placeholder="Multiplexer Primary"
                   className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 />
@@ -254,7 +254,7 @@ export default function EditCharacterForm({ character }: {
                   id="multiplexer_secondary"
                   name="multiplexer_secondary"
                   type="text"
-                  defaultValue={character.multiplexer_secondary}
+                  defaultValue={character.multiplexer_secondary as string}
                   placeholder="Multiplexer Secondary"
                   className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 />
@@ -276,7 +276,7 @@ export default function EditCharacterForm({ character }: {
                   id="databus_primary"
                   name="databus_primary"
                   type="text"
-                  defaultValue={character.databus_primary}
+                  defaultValue={character.databus_primary as string}
                   placeholder="Databus Primary"
                   className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 />
@@ -295,7 +295,7 @@ export default function EditCharacterForm({ character }: {
                   id="databus_secondary"
                   name="databus_secondary"
                   type="text"
-                  defaultValue={character.databus_secondary}
+                  defaultValue={character.databus_secondary as string}
                   placeholder="Databus Secondary"
                   className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 />
@@ -317,7 +317,7 @@ export default function EditCharacterForm({ character }: {
                   id="transmitter_primary"
                   name="transmitter_primary"
                   type="text"
-                  defaultValue={character.transmitter_primary}
+                  defaultValue={character.transmitter_primary as string}
                   placeholder="Transmitter Primary"
                   className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 />
@@ -336,7 +336,7 @@ export default function EditCharacterForm({ character }: {
                   id="transmitter_secondary"
                   name="transmitter_secondary"
                   type="text"
-                  defaultValue={character.transmitter_secondary}
+                  defaultValue={character.transmitter_secondary as string}
                   placeholder="Transmitter Secondary"
                   className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 />
@@ -359,7 +359,7 @@ export default function EditCharacterForm({ character }: {
                   id="processor_primary"
                   name="processor_primary"
                   type="text"
-                  defaultValue={character.processor_primary}
+                  defaultValue={character.processor_primary as string}
                   placeholder="processor_primary Primary"
                   className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 />
@@ -378,7 +378,7 @@ export default function EditCharacterForm({ character }: {
                   id="processor_secondary"
                   name="processor_secondary"
                   type="text"
-                  defaultValue={character.processor_secondary}
+                  defaultValue={character.processor_secondary as string}
                   placeholder="Transmitter Secondary"
                   className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 />
@@ -397,7 +397,7 @@ export default function EditCharacterForm({ character }: {
               type='text'
               id='notes'
               name='notes'
-              defaultValue={character.notes}
+              defaultValue={character.notes as string}
               className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
             />
           </div>
