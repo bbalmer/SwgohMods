@@ -129,7 +129,7 @@ export default async function CharacterListingTable({
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      {/* <EditCharacter id={char.id} /> */}
+                      <EditCharacter id={char.id} />
                       {/* <DeleteInvoice id={char.id} /> */}
                     </div>
                   </td>

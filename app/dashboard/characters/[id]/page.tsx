@@ -65,7 +65,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-6'>
                     {
                         (character.receiver_primary || character.receiver_secondary) &&
-                        <div className='grid grid-cols-2 gap-4 py-4'>
+                        <div className="grid grid-cols-2 gap-4 py-4 bg-[url('/mods/receiver.png')] bg-left bg-no-repeat">
                             <div className='grid grid-cols-subgrid gap-2 col-span-2'>
                                 <span className="text-xl font-semibold">Receiver</span>
                             </div>
@@ -77,7 +77,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                     }
                     {
                         (character.holo_primary || character.holo_secondary) &&
-                        <div className='grid grid-cols-2 gap-4 py-4'>
+                        <div className="grid grid-cols-2 gap-4 py-4 bg-[url('/mods/halo-array.png')] bg-left bg-no-repeat">
                             <div className='grid grid-cols-subgrid gap-2 col-span-2'>
                                 <span className="text-xl font-semibold">Holo-Array</span>
                             </div>
@@ -89,7 +89,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                     }
                     {
                         (character.multiplexer_primary || character.multiplexer_secondary) &&
-                        <div className='grid grid-cols-2 gap-4 py-4'>
+                        <div className="grid grid-cols-2 gap-4 py-4  bg-[url('/mods/multiplexer.png')] bg-left bg-no-repeat">
                             <div className='grid grid-cols-subgrid gap-2 col-span-2'>
                                 <span className="text-xl font-semibold">Multiplexer</span>
                             </div>
@@ -101,7 +101,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                     }
                     {
                         (character.databus_primary || character.databus_secondary) &&
-                        <div className='grid grid-cols-2 gap-4 py-4'>
+                        <div className="grid grid-cols-2 gap-4 py-4  bg-[url('/mods/data-bus.png')] bg-left bg-no-repeat">
                             <div className='grid grid-cols-subgrid gap-2 col-span-2'>
                                 <span className="text-xl font-semibold">Databus</span>
                             </div>
@@ -113,7 +113,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                     }
                     {
                         (character.transmitter_primary || character.transmitter_secondary) &&
-                        <div className='grid grid-cols-2 gap-4 py-4'>
+                        <div className="grid grid-cols-2 gap-4 py-4  bg-[url('/mods/transmitter.png')] bg-left bg-no-repeat">
                             <div className='grid grid-cols-subgrid gap-2 col-span-2'>
                                 <span className="text-xl font-semibold">Transmitter</span>
                             </div>
@@ -126,7 +126,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                     }
                     {
                         (character.processor_primary || character.processor_secondary) &&
-                        <div className='grid grid-cols-2 gap-4 py-4'>
+                        <div className="grid grid-cols-2 gap-4 py-4  bg-[url('/mods/processor.png')] bg-left-top bg-no-repeat">
                             <div className='grid grid-cols-subgrid gap-2 col-span-2'>
                                 <span className="text-xl font-semibold">Processor</span>
                             </div>
@@ -165,6 +165,6 @@ export default async function Page({ params }: { params: { id: string } }) {
 
                 </div>
             </div>
-        </main>
+        </main >
     );
 }
